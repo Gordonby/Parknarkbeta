@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "parknarkbetaapi.fullname" . }}
+  labels:
+    app: {{ template "parknarkbetaapi.name" . }}
+    chart: {{ template "parknarkbetaapi.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "parknarkbetaapi.name" . }}
+    release: {{ .Release.Name }}
